@@ -22,8 +22,8 @@ while attempts > 0:
     for letter in word:
         if letter in guessed:
             progress += letter + " "
-    else:
-        progress += "_ "
+        else:
+            progress += "_ "
     print(progress)
 
     # Verificar si el jugador ya adivinó la palabra completa
@@ -36,15 +36,19 @@ while attempts > 0:
 
     letter = input("Ingresá una letra: ")
 
-    if letter in guessed:
-        print("Ya usaste esa letra.")
-    elif letter in word:
-        guessed.append(letter)
-        print("¡Bien! Esa letra está en la palabra.")
+    if letter.isalpha () and len (letter)==1:                         
+        if letter in guessed:
+            print("Ya usaste esa letra.")
+        elif letter in word:
+            guessed.append(letter)
+            print("¡Bien! Esa letra está en la palabra.")
+        else:
+            guessed.append(letter)
+            attempts -= 1
+            print("Esa letra no está en la palabra.")
+        print()
     else:
-        guessed.append(letter)
-        attempts -= 1
-        print("Esa letra no está en la palabra.")
-    print()
+        print ("Entrada no valida\n")
+        attempts -= 1     
 else:
     print(f"¡Perdiste! La palabra era: {word}")
