@@ -1,15 +1,30 @@
 import random
-words = [
-    "python",
-    "programa",
-    "variable",
-    "funcion",
-    "bucle",
-    "cadena",
-    "entero",
-    "lista",
-]
-word = random.choice(words)
+
+dictionary = {
+
+    "Tipos_de_datos": ["entero","lista","cadena"],
+    "Elementos_basicos_de_programacion": ["variable","funcion"],
+    "Palabras_mas_conocidas": ["python","programa"]
+
+}
+
+decision = 100
+while  decision >=4 or decision <1: 
+
+    print ("Ingrese un numero del 1 al 3 para seleccionar una categoria para jugar \n"
+    "1)Tipos_de_datos \n"
+    "2)Elementos_basicos_de_programacion \n"
+    "3)Palabras_mas_conocidas")
+
+    decision = int (input ("Su eleccion es: "))
+
+if decision == 1:
+    word = random.choice(dictionary.get("Tipos_de_datos",[]))
+elif decision == 2 :
+    word = random.choice(dictionary.get("Elementos_basicos_de_programacion",[]))
+else:
+    word = random.choice(dictionary.get("Palabras_mas_conocidas",[]))    
+
 guessed = []
 attempts = 6
 score = 0
