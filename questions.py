@@ -1,5 +1,15 @@
 import random
 
+def show_progress (progress,word):
+    progress = ""
+    for letter in word:
+        if letter in guessed:
+            progress += letter + " "
+        else:
+            progress += "_ "
+    print(progress)
+    return (progress)
+
 dictionary = {
 
     "Tipos_de_datos": ["entero","lista","cadena"],
@@ -17,40 +27,54 @@ while  decision >=4 or decision <1:
     "3)Palabras_mas_conocidas")
 
     decision = int (input ("Su eleccion es: "))
+    print ("\n")
 
 if decision == 1:
     word = random.choice(dictionary.get("Tipos_de_datos",[]))
+    amount_of_words = len (dictionary["Tipos_de_datos"])
+    category_words = random.sample (dictionary ["Tipos_de_datos"],3)
+    
 elif decision == 2 :
     word = random.choice(dictionary.get("Elementos_basicos_de_programacion",[]))
+    amount_of_words = len (dictionary["Elementos_basicos_de_programacion"])
+    category_words = random.sample (dictionary ["Elementos_basicos_de_programacion"],2)
+    
 else:
-    word = random.choice(dictionary.get("Palabras_mas_conocidas",[]))    
+    word = random.choice(dictionary.get("Palabras_mas_conocidas",[]))
+    amount_of_words = len (dictionary["Palabras_mas_conocidas"])    
+    category_words = random.sample (dictionary ["Palabras_mas_conocidas"],2)
 
 guessed = []
 attempts = 6
 score = 0
+progress = ""
 
-print("¡Bienvenido al Ahorcado!")
-print()
+print("¡Bienvenido al Ahorcado! \n")
 
 while attempts > 0:
     # Mostrar progreso: letras adivinadas y guiones para las que faltan
-    progress = ""
-    for letter in word:
-        if letter in guessed:
-            progress += letter + " "
-        else:
-            progress += "_ "
-    print(progress)
-
+    progress = show_progress (progress,word)
+    
+    
     # Verificar si el jugador ya adivinó la palabra completa
     if "_" not in progress:
-        print(f"¡Ganaste!, tu puntaje es {score+6}")
-        break
+        score += 6
+        print(f"¡Adivinaste la palabra!, tu puntaje actual es {score}")
+        amount_of_words -= 1
+        category_words.remove (word)
+        if amount_of_words == 0:
+            print (f'Ganaste el juego!, tu puntuje final es {score}')
+            break
+        else:
+            guessed = []
+            word = random.choice (category_words)
+            progress = show_progress (progress,word)
+            print ("Ahora tendra que adivinar otra palabra de la categoria que eligio")
 
     print(f"Intentos restantes: {attempts}")
     print(f"Letras usadas: {', '.join(guessed)}")
 
-    letter = input("Ingresá una letra: ")
+    letter = input ("Ingresá una letra: ").lower()
 
     if letter.isalpha () and len (letter)==1:                         
         if letter in guessed:
